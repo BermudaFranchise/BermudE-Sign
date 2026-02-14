@@ -15,6 +15,8 @@ require_relative '../lib/normalize_client_ip_middleware'
 
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/bermuda_sign'
+
 module BermudaSign
   class Application < Rails::Application
     config.load_defaults 8.1
