@@ -22,8 +22,8 @@ module BermudaSign
 
   CERTS = JSON.parse(ENV.fetch('CERTS', '{}'))
   TIMESERVER_URL = ENV.fetch('TIMESERVER_URL', nil)
-  VERSION_FILE_PATH = Rails.root.join('.version')
-  VERSION_FILE2_PATH = Rails.public_path.join('version')
+  VERSION_FILE_PATH = Pathname.new(File.expand_path('../.version', __dir__))
+  VERSION_FILE2_PATH = Pathname.new(File.expand_path('../public/version', __dir__))
 
   DEFAULT_URL_OPTIONS = {
     host: HOST,
