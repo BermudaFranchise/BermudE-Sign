@@ -1,0 +1,65 @@
+# =============================================================================
+# Active Storage Configuration — storage.yml
+# =============================================================================
+#
+# ENCRYPTION SETUP:
+#
+# To enable file-level encryption, wrap your existing storage service
+# with the Encrypted service. The encrypted service transparently encrypts
+# files before upload and decrypts on download.
+#
+# Example — S3 with encryption:
+#
+#   production:
+#     service: Encrypted
+#     backend:
+#       service: S3
+#       bucket: <%= ENV['AWS_BUCKET'] %>
+#       region: <%= ENV['AWS_REGION'] || 'us-east-1' %>
+#       access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+#       secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+#
+# Example — Local disk with encryption:
+#
+#   production:
+#     service: Encrypted
+#     backend:
+#       service: Disk
+#       root: <%= Rails.root.join("storage") %>
+#
+# Example — GCS with encryption:
+#
+#   production:
+#     service: Encrypted
+#     backend:
+#       service: GCS
+#       project: <%= ENV['GCS_PROJECT'] %>
+#       credentials: <%= ENV['GCS_CREDENTIALS'] %>
+#       bucket: <%= ENV['GCS_BUCKET'] %>
+#
+# IMPORTANT: If you enable encryption on an existing deployment,
+# existing files will still be readable (the service detects unencrypted
+# files and returns them as-is). Only new uploads will be encrypted.
+#
+# To encrypt existing files, run:
+#   rails runner 'EncryptExistingBlobsJob.perform_later'
+#
+# =============================================================================
+
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+# Uncomment and configure for production with encryption:
+# production_encrypted:
+#   service: Encrypted
+#   backend:
+#     service: S3
+#     bucket: <%= ENV['AWS_BUCKET'] %>
+#     region: <%= ENV['AWS_REGION'] || 'us-east-1' %>
+#     access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+#     secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>

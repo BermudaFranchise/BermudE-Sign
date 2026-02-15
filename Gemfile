@@ -78,3 +78,8 @@ group :test do
   gem 'cuprite'
   gem 'webmock'
 end
+
+# Email delivery via Resend API
+# gem 'resend' # Optional: only needed if you want the official SDK
+# Note: We use a custom delivery method (lib/resend_delivery_method.rb)
+# that calls the Resend API directly — no extra gem needed.
