@@ -504,7 +504,12 @@ en: &en
   admin: Admin
   tenant_admin: Tenant Admin
   editor: Editor
+  manager: Manager
   viewer: Viewer
+  full_access_to_all_settings_users_and_data: Full access to all settings, users, and data
+  manage_templates_submissions_and_users: Manage templates, submissions, and users
+  create_and_edit_templates_and_submissions: Create and edit templates and submissions
+  read_only_access_to_templates_and_submissions: Read-only access to templates and submissions
   member: Member
   agent: Agent
   superadmin: Superadmin
@@ -1481,6 +1486,7 @@ es: &es
   admin: Administrador
   tenant_admin: Tenant Administrador
   editor: Editor
+  manager: Gerente
   viewer: Visor
   member: Miembro
   agent: Agente
@@ -2456,6 +2462,7 @@ it: &it
   tenant_admin: Amministratore tenant
   editor: Editor
   viewer: Visualizzatore
+  manager: Responsabile
   member: Membro
   agent: Agente
   superadmin: Superamministratore
@@ -3431,6 +3438,7 @@ fr: &fr
   tenant_admin: Administrateur locataire
   editor: Éditeur
   viewer: Lecteur
+  manager: Gestionnaire
   member: Membre
   agent: Agent
   superadmin: Superadmin
@@ -4402,6 +4410,7 @@ pt: &pt
   tenant_admin: Tenant Administrador
   editor: Editor
   viewer: Visualizador
+  manager: Gerente
   member: Membro
   agent: Agente
   superadmin: Superadministrador
@@ -5376,6 +5385,7 @@ de: &de
   tenant_admin: Mandantenadministrator
   editor: Redakteur
   viewer: Betrachter
+  manager: Verwalter
   member: Mitglied
   agent: Agent
   superadmin: Superadministrator
@@ -6739,6 +6749,7 @@ nl: &nl
   tenant_admin: Tenantbeheerder
   editor: Bewerker
   viewer: Lezer
+  manager: Beheerder
   member: Lid
   agent: Agent
   superadmin: Superbeheerder

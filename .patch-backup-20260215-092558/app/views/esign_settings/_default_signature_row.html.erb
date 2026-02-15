@@ -1,0 +1,20 @@
+<tr scope="row" class="group">
+  <td class="flex items-center space-x-1">
+    <%= svg_icon('discount_check_filled', class: 'w-6 h-6 text-green-500') %>
+    <span class="flex items-center">
+      <%= t('sign_suite_trusted_signature') %>
+      <div class="tooltip ml-1" data-tip="<%= t('trusted_certificate_signature_description') %>">
+        <%= svg_icon('circle_question', class: 'w-4 h-4 stroke-1') %>
+      </div>
+    </span>
+  </td>
+  <td>
+  </td>
+  <td>
+    <%= button_to settings_esign_path, method: :put, params: { name: SignSuite::AATL_CERT_NAME }, class: 'btn btn-outline btn-neutral btn-xs whitespace-nowrap', title: t('make_default') do %>
+      <%= t('make_default') %>
+    <% end %>
+  </td>
+  <td>
+  </td>
+</tr>
