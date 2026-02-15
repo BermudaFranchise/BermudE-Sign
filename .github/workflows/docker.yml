@@ -20,7 +20,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: bermudasign/bermudasign
+        images: signsuite/signsuite
         tags: type=semver,pattern={{version}}
 
     - name: Set up QEMU

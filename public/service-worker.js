@@ -1,9 +1,9 @@
 self.addEventListener('install', () => {
-  console.log('BermudaSign App installed')
+  console.log('SignSuite App installed')
 })
 
 self.addEventListener('activate', () => {
-  console.log('BermudaSign App activated')
+  console.log('SignSuite App activated')
 })
 
 self.addEventListener('fetch', (event) => {

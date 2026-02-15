@@ -218,7 +218,7 @@ export default {
       return ['', null, 'transparent'].includes(this.backgroundColor) ? 'white' : this.backgroundColor
     },
     modalContainerEl () {
-      return this.$el.getRootNode().querySelector('#bermudasign_modal_container')
+      return this.$el.getRootNode().querySelector('#signsuite_modal_container')
     }
   },
   created () {

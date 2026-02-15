@@ -2,18 +2,20 @@ FROM ruby:4.0.1-alpine AS download
 
 WORKDIR /fonts
 
-RUN apk --no-cache add fontforge wget && \
-    wget https://github.com/satbyy/go-noto-universal/releases/download/v7.0/GoNotoKurrent-Regular.ttf && \
-    wget https://github.com/satbyy/go-noto-universal/releases/download/v7.0/GoNotoKurrent-Bold.ttf && \
-    wget https://github.com/impallari/DancingScript/raw/master/fonts/DancingScript-Regular.otf && \
-    wget https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSansSymbols2/hinted/ttf/NotoSansSymbols2-Regular.ttf && \
-    wget https://github.com/Maxattax97/gnu-freefont/raw/master/ttf/FreeSans.ttf && \
-    wget https://github.com/impallari/DancingScript/raw/master/OFL.txt && \
-    # NOTE: Field detection model from docusealco - fork fields-detection repo for full independence
-    wget -O /model.onnx "https://github.com/docusealco/fields-detection/releases/download/2.0.0/model_704_int8.onnx" && \
-    wget -O pdfium-linux.tgz "https://github.com/BermudaFranchise/B-Pdfium/releases/latest/download/pdfium-linux-$(uname -m | sed 's/x86_64/x64/;s/aarch64/arm64/').tgz" && \
+COPY vendor/fonts/GoNotoKurrent-Regular.ttf .
+COPY vendor/fonts/GoNotoKurrent-Bold.ttf .
+COPY vendor/fonts/DancingScript-Regular.otf .
+COPY vendor/fonts/NotoSansSymbols2-Regular.ttf .
+COPY vendor/fonts/FreeSans.ttf .
+COPY vendor/fonts/OFL.txt .
+COPY vendor/models/model_704_int8.onnx /model.onnx
+COPY vendor/pdfium/pdfium-linux-x64.tgz /tmp/pdfium-linux-x64.tgz
+COPY vendor/pdfium/pdfium-linux-arm64.tgz /tmp/pdfium-linux-arm64.tgz
+
+RUN apk --no-cache add fontforge && \
+    cp /tmp/pdfium-linux-$(uname -m | sed 's/x86_64/x64/;s/aarch64/arm64/').tgz /tmp/pdfium-linux.tgz && \
     mkdir -p /pdfium-linux && \
-    tar -xzf pdfium-linux.tgz -C /pdfium-linux
+    tar -xzf /tmp/pdfium-linux.tgz -C /pdfium-linux
 
 RUN fontforge -lang=py -c 'font1 = fontforge.open("FreeSans.ttf"); font2 = fontforge.open("NotoSansSymbols2-Regular.ttf"); font1.mergeFonts(font2); font1.generate("FreeSans.ttf")'
 
@@ -54,7 +56,7 @@ WORKDIR /app
 
 RUN apk add --no-cache sqlite-dev libpq-dev vips-dev yaml-dev redis libheif vips-heif gcompat ttf-freefont onnxruntime && mkdir /fonts && rm /usr/share/fonts/freefont/FreeSans.otf
 
-RUN addgroup -g 2000 docuseal && adduser -u 2000 -G docuseal -s /bin/sh -D -h /home/docuseal docuseal
+RUN addgroup -g 2000 signsuite && adduser -u 2000 -G signsuite -s /bin/sh -D -h /home/signsuite signsuite
 
 RUN echo $'.include = /etc/ssl/openssl.cnf\n\
 \n\
@@ -68,35 +70,35 @@ activate = 1\n\
 [legacy_sect]\n\
 activate = 1' >> /etc/openssl_legacy.cnf
 
-COPY --chown=docuseal:docuseal ./Gemfile ./Gemfile.lock ./
+COPY --chown=signsuite:signsuite ./Gemfile ./Gemfile.lock ./
 
 RUN apk add --no-cache build-base git && bundle install && apk del --no-cache build-base git && rm -rf ~/.bundle /usr/local/bundle/cache && ruby -e "puts Dir['/usr/local/bundle/**/{spec,rdoc,resources/shared,resources/collation,resources/locales}']" | xargs rm -rf && ln -sf /usr/lib/libonnxruntime.so.1 $(ruby -e "print Dir[Gem::Specification.find_by_name('onnxruntime').gem_dir + '/vendor/*.so'].first")
 
-COPY --chown=docuseal:docuseal ./bin ./bin
-COPY --chown=docuseal:docuseal ./app ./app
-COPY --chown=docuseal:docuseal ./config ./config
-COPY --chown=docuseal:docuseal ./db/migrate ./db/migrate
-COPY --chown=docuseal:docuseal ./log ./log
-COPY --chown=docuseal:docuseal ./lib ./lib
-COPY --chown=docuseal:docuseal ./public ./public
-COPY --chown=docuseal:docuseal ./tmp ./tmp
-COPY --chown=docuseal:docuseal LICENSE README.md Rakefile config.ru .version ./
-COPY --chown=docuseal:docuseal .version ./public/version
+COPY --chown=signsuite:signsuite ./bin ./bin
+COPY --chown=signsuite:signsuite ./app ./app
+COPY --chown=signsuite:signsuite ./config ./config
+COPY --chown=signsuite:signsuite ./db/migrate ./db/migrate
+COPY --chown=signsuite:signsuite ./log ./log
+COPY --chown=signsuite:signsuite ./lib ./lib
+COPY --chown=signsuite:signsuite ./public ./public
+COPY --chown=signsuite:signsuite ./tmp ./tmp
+COPY --chown=signsuite:signsuite LICENSE README.md Rakefile config.ru .version ./
+COPY --chown=signsuite:signsuite .version ./public/version
 
-COPY --chown=docuseal:docuseal --from=download /fonts/GoNotoKurrent-Regular.ttf /fonts/GoNotoKurrent-Bold.ttf /fonts/DancingScript-Regular.otf /fonts/OFL.txt /fonts
+COPY --chown=signsuite:signsuite --from=download /fonts/GoNotoKurrent-Regular.ttf /fonts/GoNotoKurrent-Bold.ttf /fonts/DancingScript-Regular.otf /fonts/OFL.txt /fonts
 COPY --from=download /fonts/FreeSans.ttf /usr/share/fonts/freefont
 COPY --from=download /pdfium-linux/lib/libpdfium.so /usr/lib/libpdfium.so
 COPY --from=download /pdfium-linux/licenses/pdfium.txt /usr/lib/libpdfium-LICENSE.txt
-COPY --chown=docuseal:docuseal --from=download /model.onnx /app/tmp/model.onnx
-COPY --chown=docuseal:docuseal --from=webpack /app/public/packs ./public/packs
+COPY --chown=signsuite:signsuite --from=download /model.onnx /app/tmp/model.onnx
+COPY --chown=signsuite:signsuite --from=webpack /app/public/packs ./public/packs
 
 RUN ln -s /fonts /app/public/fonts && \
     bundle exec bootsnap precompile -j 1 --gemfile app/ lib/ && \
-    chown -R docuseal:docuseal /app/tmp/cache
+    chown -R signsuite:signsuite /app/tmp/cache
 
-WORKDIR /data/docuseal
-ENV HOME=/home/docuseal
-ENV WORKDIR=/data/docuseal
+WORKDIR /data/signsuite
+ENV HOME=/home/signsuite
+ENV WORKDIR=/data/signsuite
 
 EXPOSE 3000
 CMD ["/app/bin/bundle", "exec", "puma", "-C", "/app/config/puma.rb", "--dir", "/app"]

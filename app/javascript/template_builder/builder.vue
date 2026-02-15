@@ -570,7 +570,7 @@
       </div>
     </Transition>
     <div
-      id="bermudasign_modal_container"
+      id="signsuite_modal_container"
       class="modal-container"
     />
   </div>
@@ -1739,7 +1739,7 @@ export default {
       delete clipboardData.field.submitter_uuid
 
       try {
-        localStorage.setItem('bermudasign_clipboard', JSON.stringify(clipboardData))
+        localStorage.setItem('signsuite_clipboard', JSON.stringify(clipboardData))
       } catch (e) {
         console.error('Failed to save clipboard:', e)
       }
@@ -1777,20 +1777,20 @@ export default {
       }
 
       try {
-        localStorage.setItem('bermudasign_clipboard', JSON.stringify(clipboardData))
+        localStorage.setItem('signsuite_clipboard', JSON.stringify(clipboardData))
       } catch (e) {
         console.error('Failed to save clipboard:', e)
       }
     },
     pasteField (targetPosition = null) {
-      const clipboard = localStorage.getItem('bermudasign_clipboard')
+      const clipboard = localStorage.getItem('signsuite_clipboard')
 
       if (!clipboard) return
 
       const data = JSON.parse(clipboard)
 
       if (Date.now() - data.timestamp >= 3600000) {
-        localStorage.removeItem('bermudasign_clipboard')
+        localStorage.removeItem('signsuite_clipboard')
 
         return
       }
@@ -1943,7 +1943,7 @@ export default {
     },
     hasClipboardData () {
       try {
-        const clipboard = localStorage.getItem('bermudasign_clipboard')
+        const clipboard = localStorage.getItem('signsuite_clipboard')
 
         if (clipboard) {
           const data = JSON.parse(clipboard)

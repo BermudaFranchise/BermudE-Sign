@@ -42,7 +42,7 @@ module Templates
   end
 
   def search(current_user, templates, keyword)
-    if BermudaSign.fulltext_search?
+    if SignSuite.fulltext_search?
       fulltext_search(current_user, templates, keyword)
     else
       plain_search(templates, keyword)

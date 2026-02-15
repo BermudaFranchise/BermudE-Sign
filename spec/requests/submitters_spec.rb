@@ -157,6 +157,6 @@ describe 'Submitter API' do
 
   def update_submitter_body(submitter)
     submitter_body(submitter).except(:template, :submission_events)
-                             .merge(embed_src: "#{BermudaSign::DEFAULT_APP_URL}/s/#{submitter.slug}")
+                             .merge(embed_src: "#{SignSuite::DEFAULT_APP_URL}/s/#{submitter.slug}")
   end
 end

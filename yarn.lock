@@ -1221,9 +1221,9 @@
     "@hotwired/turbo" "^7.3.0"
     "@rails/actioncable" "^7.0"
 
-"@hotwired/turbo@^7.3.0", "@hotwired/turbo@https://github.com/docusealco/turbo#main":
+"@hotwired/turbo@^7.3.0":
   version "7.3.0"
-  resolved "https://github.com/docusealco/turbo#64d286a14b0d11383719a9a09852a775863d621a"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.3.0.tgz"
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"

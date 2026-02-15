@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   check_authorization unless: :devise_controller?
 
   around_action :with_locale
-  before_action :sign_in_for_demo, if: -> { BermudaSign.demo? }
+  before_action :sign_in_for_demo, if: -> { SignSuite.demo? }
   before_action :maybe_redirect_to_setup, unless: :signed_in?
   before_action :authenticate_user!, unless: :devise_controller?
 
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options
-    BermudaSign.default_url_options
+    SignSuite.default_url_options
   end
 
   def impersonate_user(user)
@@ -118,7 +118,7 @@ class ApplicationController < ActionController::Base
   end
 
   def form_link_host
-    BermudaSign.default_url_options[:host]
+    SignSuite.default_url_options[:host]
   end
 
 

@@ -29,7 +29,7 @@ RSpec.describe SendSubmissionCompletedWebhookRequestJob do
         },
         headers: {
           'Content-Type' => 'application/json',
-          'User-Agent' => 'BermudaSign Webhook'
+          'User-Agent' => 'SignSuite Webhook'
         }
       ).once
     end
@@ -47,7 +47,7 @@ RSpec.describe SendSubmissionCompletedWebhookRequestJob do
         },
         headers: {
           'Content-Type' => 'application/json',
-          'User-Agent' => 'BermudaSign Webhook',
+          'User-Agent' => 'SignSuite Webhook',
           'X-Secret-Header' => 'secret_value'
         }
       ).once

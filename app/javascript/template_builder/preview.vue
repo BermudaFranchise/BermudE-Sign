@@ -194,7 +194,7 @@ export default {
       return [...this.document.preview_images].sort((a, b) => parseInt(a.filename) - parseInt(b.filename))[0]
     },
     modalContainerEl () {
-      return this.$el.getRootNode().querySelector('#bermudasign_modal_container')
+      return this.$el.getRootNode().querySelector('#signsuite_modal_container')
     }
   },
   methods: {

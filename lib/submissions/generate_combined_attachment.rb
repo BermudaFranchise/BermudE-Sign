@@ -15,9 +15,9 @@ module Submissions
 
       io = StringIO.new
 
-      pdf.trailer.info[:Creator] = "#{BermudaSign.product_name} (#{BermudaSign::PRODUCT_URL})"
+      pdf.trailer.info[:Creator] = "#{SignSuite.product_name} (#{SignSuite::PRODUCT_URL})"
 
-      if BermudaSign.pdf_format == 'pdf/a-3b'
+      if SignSuite.pdf_format == 'pdf/a-3b'
         pdf.task(:pdfa, level: '3b')
         pdf.config['font.map'] = GenerateResultAttachments::PDFA_FONT_MAP
       end

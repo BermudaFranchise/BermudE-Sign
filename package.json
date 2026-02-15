@@ -1,5 +1,5 @@
 {
-  "name": "bermuda-sign",
+  "name": "signsuite",
   "private": true,
   "dependencies": {
     "@babel/core": "7.21.8",
@@ -10,7 +10,7 @@
     "@codemirror/lang-html": "^6.4.9",
     "@eid-easy/eideasy-widget": "^2.171.0",
     "@github/catalyst": "^2.0.0-beta",
-    "@hotwired/turbo": "https://github.com/docusealco/turbo#main",
+    "@hotwired/turbo": "^7.3.0",
     "@hotwired/turbo-rails": "^7.3.0",
     "@specious/htmlflow": "^1.1.0",
     "@tabler/icons-vue": "^2.47.0",

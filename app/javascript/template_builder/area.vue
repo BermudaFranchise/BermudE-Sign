@@ -593,7 +593,7 @@ export default {
         (this.inputMode && (['text', 'number'].includes(this.field.type) || (this.field.type === 'date' && this.field.default_value !== '{{date}}')))
     },
     modalContainerEl () {
-      return this.$el.getRootNode().querySelector('#bermudasign_modal_container')
+      return this.$el.getRootNode().querySelector('#signsuite_modal_container')
     },
     defaultName () {
       return this.buildDefaultName(this.field)

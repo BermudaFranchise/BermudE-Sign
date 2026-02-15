@@ -37,7 +37,7 @@ module Submissions
       bold_italic: FONT_BOLD_NAME
     }.freeze
 
-    SIGN_REASON = 'Signed by %<name>s with BermudaSign.com'
+    SIGN_REASON = 'Signed by %<name>s with SignSuite.com'
 
     RTL_REGEXP = TextUtils::RTL_REGEXP
 
@@ -234,7 +234,7 @@ module Submissions
           page[:Annots] = page[:Annots].try(:reject) do |e|
             next if e.is_a?(Integer) || e.is_a?(Symbol)
 
-            e.present? && e[:A] && e[:A][:URI].to_s.starts_with?('file:///bermuda_sign_field')
+            e.present? && e[:A] && e[:A][:URI].to_s.starts_with?('file:///sign_suite_field')
           end || page[:Annots]
 
           width = page.box.width
@@ -496,7 +496,7 @@ module Submissions
                 if with_file_links
                   ActiveStorage::Blob.proxy_url(attachment.blob)
                 else
-                  r.submissions_preview_url(submission.slug, **BermudaSign.default_url_options)
+                  r.submissions_preview_url(submission.slug, **SignSuite.default_url_options)
                 end
 
               page[:Annots] << pdf.add(
@@ -713,7 +713,7 @@ module Submissions
 
       pdf.trailer.info[:Creator] = info_creator
 
-      if BermudaSign.pdf_format == 'pdf/a-3b'
+      if SignSuite.pdf_format == 'pdf/a-3b'
         pdf.task(:pdfa, level: '3b')
         pdf.config['font.map'] = PDFA_FONT_MAP
       end
@@ -923,7 +923,7 @@ module Submissions
       reason_name = submitter.email || submitter.name || submitter.phone
 
       config =
-        if BermudaSign.multitenant?
+        if SignSuite.multitenant?
           AccountConfig.where(account: submitter.account, key: AccountConfig::ESIGNING_PREFERENCE_KEY)
                        .first_or_initialize(value: 'single')
         else
@@ -942,7 +942,7 @@ module Submissions
     end
 
     def info_creator
-      "#{BermudaSign.product_name} (#{BermudaSign::PRODUCT_URL})"
+      "#{SignSuite.product_name} (#{SignSuite::PRODUCT_URL})"
     end
 
     def detached_signature?(_submitter)

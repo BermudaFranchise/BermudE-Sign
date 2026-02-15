@@ -3,14 +3,14 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    image: bermudasign/bermudasign:latest
+    image: signsuite/signsuite:latest
     ports:
       - 3000:3000
     volumes:
-      - ./bermudasign:/data/bermudasign
+      - ./signsuite:/data/signsuite
     environment:
       - FORCE_SSL=${HOST}
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/bermudasign
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/signsuite
 
   postgres:
     image: postgres:18
@@ -19,7 +19,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: bermudasign
+      POSTGRES_DB: signsuite
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

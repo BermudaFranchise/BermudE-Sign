@@ -12,7 +12,7 @@
       <li>
         <%= link_to t('account'), settings_account_path, class: 'text-base hover:bg-base-300' %>
       </li>
-      <% unless BermudaSign.multitenant? %>
+      <% unless SignSuite.multitenant? %>
         <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::EMAIL_SMTP_KEY, account: current_account)) && ENV['SMTP_ADDRESS'].blank? &&  true_user == current_user %>
           <li>
             <%= link_to t('email'), settings_email_index_path, class: 'text-base hover:bg-base-300' %>
@@ -50,42 +50,34 @@
         </li>
       <% end %>
       <%= render 'shared/settings_nav_extra' %>
-      <% if BermudaSign.demo? || !BermudaSign.multitenant? %>
+      <% if SignSuite.demo? || !SignSuite.multitenant? %>
         <% if can?(:read, AccessToken) %>
           <li>
             <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
       <% end %>
-      <% if BermudaSign.demo? || !BermudaSign.multitenant? || (current_user != true_user && !current_account.testing?) %>
+      <% if SignSuite.demo? || !SignSuite.multitenant? || (current_user != true_user && !current_account.testing?) %>
         <% if can?(:read, WebhookUrl) %>
           <li>
             <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
       <% end %>
-      <% if !BermudaSign.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.linked_account_account) %>
+      <% if !SignSuite.demo? && can?(:manage, EncryptedConfig) && (current_user == true_user || current_account.testing?) %>
         <li>
-          <%= content_for(:pro_link) || link_to(BermudaSign.multitenant? ? "#" : "#{BermudaSign::CLOUD_URL}/sign_up?#{{ redir: "#{BermudaSign::CONSOLE_URL}/on_premises" }.to_query}", class: 'text-base hover:bg-base-300', data: { turbo: false }) do %>
-            <%= t('plans') %>
-            <span class="badge badge-warning"><%= t('pro') %></span>
+          <%= link_to SignSuite.multitenant? ? "#" : "#{'#'}/on_premises", class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
+            <% if SignSuite.multitenant? %> API <% else %> <%= t('console') %> <% end %>
           <% end %>
         </li>
-      <% end %>
-      <% if !BermudaSign.demo? && can?(:manage, EncryptedConfig) && (current_user == true_user || current_account.testing?) %>
-        <li>
-          <%= link_to BermudaSign.multitenant? ? "#" : "#{BermudaSign::CONSOLE_URL}/on_premises", class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
-            <% if BermudaSign.multitenant? %> API <% else %> <%= t('console') %> <% end %>
-          <% end %>
-        </li>
-        <% if BermudaSign.multitenant? %>
+        <% if SignSuite.multitenant? %>
           <li>
             <%= link_to "#", class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
               <%= t('embedding') %>
             <% end %>
           </li>
         <% end %>
-        <% if (!BermudaSign.multitenant? || can?(:manage, :saml_sso)) && can?(:read, EncryptedConfig.new(key: 'saml_configs', account: current_account)) && true_user == current_user %>
+        <% if (!SignSuite.multitenant? || can?(:manage, :saml_sso)) && can?(:read, EncryptedConfig.new(key: 'saml_configs', account: current_account)) && true_user == current_user %>
           <li>
             <%= link_to 'SSO', settings_sso_index_path, class: 'text-base hover:bg-base-300' %>
           </li>
@@ -108,19 +100,19 @@
       <% end %>
     </ul>
   </menu-active>
-  <% if BermudaSign.multitenant? || cannot?(:manage, :tenants) %>
+  <% if SignSuite.multitenant? || cannot?(:manage, :tenants) %>
     <div id="support_channels" class="mx-4 border-t border-base-300 hidden md:block">
       <div class="text-sm mt-3">
         <%= t('need_help_ask_a_question_') %>
       </div>
       <div class="flex mt-3 space-x-3">
       </div>
-      <a href="mailto:<%= BermudaSign::SUPPORT_EMAIL %>" target="_blank" class="w-full block mt-4 underline text-center">
-        <%= BermudaSign::SUPPORT_EMAIL %>
+      <a href="mailto:<%= SignSuite::SUPPORT_EMAIL %>" target="_blank" class="w-full block mt-4 underline text-center">
+        <%= SignSuite::SUPPORT_EMAIL %>
       </a>
-      <% if BermudaSign.version.present? && !BermudaSign.multitenant? && can?(:manage, EncryptedConfig) %>
+      <% if SignSuite.version.present? && !SignSuite.multitenant? && can?(:manage, EncryptedConfig) %>
         <span class="badge badge-outline text-xs block mx-auto mt-4">
-          v<%= BermudaSign.version %>
+          v<%= SignSuite.version %>
         </span>
       <% end %>
     </div>

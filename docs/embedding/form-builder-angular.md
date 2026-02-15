@@ -5,16 +5,16 @@
 ```angular
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DocusealBuilderComponent } from '@docuseal/angular';
+import { SignSuiteBuilderComponent } from '@signsuite/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [DocusealBuilderComponent],
+  imports: [SignSuiteBuilderComponent],
   template: `
     <div class="app">
       <ng-container *ngIf="token">
-        <docuseal-builder [token]="token"></docuseal-builder>
+        <signsuite-builder [token]="token"></signsuite-builder>
       </ng-container>
     </div>
   `
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.post('/api/docuseal/builder_token', {}).subscribe((data: any) => {
+    this.http.post('/api/builder_token', {}).subscribe((data: any) => {
       this.token = data.token;
     });
   }
@@ -104,7 +104,7 @@ const token = jwt.sign({
   "host": {
     "type": "string",
     "required": false,
-    "description": "BermudaSign host domain name. Only use this attribute if you are using the on-premises BermudaSign installation or bermudafranchise.com Cloud.",
+    "description": "SignSuite host domain name. Only use this attribute if you are using the on-premises SignSuite installation or example.com Cloud.",
     "example": "yourdomain.com"
   },
   "customButton": {
@@ -498,7 +498,7 @@ const token = jwt.sign({
     "type": "object",
     "required": false,
     "default": "{}",
-    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://github.com/BermudaFranchise/BermudaSign/blob/master/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
+    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://signsuite.live/docs/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
   },
   "backgroundColor": {
     "type": "string",

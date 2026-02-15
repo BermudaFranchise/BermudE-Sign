@@ -6,12 +6,12 @@ if ENV['RAILS_ENV'] == 'production'
       workdir = ENV.fetch('WORKDIR', '.')
 
       if File.exist?(workdir) && File.stat(workdir).uid != 2000
-        puts 'Changing the owner of the bermuda_sign directory...' unless Dir.empty?(workdir)
+        puts 'Changing the owner of the sign_suite directory...' unless Dir.empty?(workdir)
 
         FileUtils.chown_R(2000, 2000, workdir)
       end
     rescue StandardError
-      puts 'Unable to change bermuda_sign directory owner'
+      puts 'Unable to change sign_suite directory owner'
     end
   end
 
@@ -33,7 +33,7 @@ if ENV['RAILS_ENV'] == 'production'
     require 'dotenv'
     require 'securerandom'
 
-    dotenv_path = "#{ENV.fetch('WORKDIR', '.')}/bermuda_sign.env"
+    dotenv_path = "#{ENV.fetch('WORKDIR', '.')}/sign_suite.env"
 
     unless File.exist?(dotenv_path)
       default_env = <<~TEXT

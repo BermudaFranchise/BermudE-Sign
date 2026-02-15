@@ -8,7 +8,7 @@ class PersonalizationSettingsController < ApplicationController
     AccountConfig::SUBMITTER_DOCUMENTS_COPY_EMAIL_KEY,
     AccountConfig::SUBMITTER_COMPLETED_EMAIL_KEY,
     AccountConfig::FORM_COMPLETED_MESSAGE_KEY,
-    *(BermudaSign.multitenant? ? [] : [AccountConfig::POLICY_LINKS_KEY])
+    *(SignSuite.multitenant? ? [] : [AccountConfig::POLICY_LINKS_KEY])
   ].freeze
 
   InvalidKey = Class.new(StandardError)

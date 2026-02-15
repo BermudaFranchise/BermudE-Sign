@@ -17,7 +17,7 @@ ActiveSupport.on_load(:active_storage_blob) do
   def self.proxy_url(blob, expires_at: nil, filename: nil, host: nil)
     Rails.application.routes.url_helpers.blobs_proxy_url(
       signed_uuid: blob.signed_uuid(expires_at:), filename: filename || blob.filename,
-      **BermudaSign.default_url_options,
+      **SignSuite.default_url_options,
       **{ host: }.compact
     )
   end

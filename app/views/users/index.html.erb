@@ -70,7 +70,14 @@
                 <% end %>
               </td>
               <td>
-                <span class="badge badge-info badge-outline whitespace-nowrap">
+                <% badge_class = case user.role
+                   when 'admin' then 'badge-error badge-outline'
+                   when 'manager' then 'badge-warning badge-outline'
+                   when 'editor' then 'badge-info badge-outline'
+                   when 'viewer' then 'badge-ghost badge-outline'
+                   else 'badge-info badge-outline'
+                   end %>
+                <span class="badge <%= badge_class %> whitespace-nowrap">
                   <%= t(user.role) %>
                 </span>
               </td>

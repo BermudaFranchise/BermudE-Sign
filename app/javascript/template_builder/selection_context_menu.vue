@@ -185,7 +185,7 @@ export default {
   },
   computed: {
     modalContainerEl () {
-      return this.$el.getRootNode().querySelector('#bermudasign_modal_container')
+      return this.$el.getRootNode().querySelector('#signsuite_modal_container')
     },
     selectedFields () {
       return this.selectedAreasRef.value.map((area) => {

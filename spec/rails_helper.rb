@@ -76,7 +76,7 @@ RSpec.configure do |config|
   end
 
   config.before(multitenant: true) do
-    allow(BermudaSign).to receive(:multitenant?).and_return(true)
+    allow(SignSuite).to receive(:multitenant?).and_return(true)
   end
 end
 

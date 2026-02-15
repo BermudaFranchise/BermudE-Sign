@@ -4,7 +4,7 @@ class SubmittersSendEmailController < ApplicationController
   load_and_authorize_resource :submitter, id_param: :submitter_slug, find_by: :slug
 
   def create
-    if BermudaSign.multitenant? && SubmissionEvent.exists?(submitter: @submitter,
+    if SignSuite.multitenant? && SubmissionEvent.exists?(submitter: @submitter,
                                                         event_type: 'send_email',
                                                         created_at: 10.hours.ago..Time.current)
       Rollbar.warning("Already sent: #{@submitter.id}") if defined?(Rollbar)

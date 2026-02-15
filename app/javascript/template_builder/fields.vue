@@ -246,7 +246,7 @@
         :data-tip="t('obtain_qualified_electronic_signature_with_the_trusted_provider_click_to_learn_more')"
       >
         <a
-          href="https://www.bermudafranchise.com/qualified-electronic-signature"
+          href="https://www.example.com/qualified-electronic-signature"
           target="_blank"
           class="opacity-50 flex items-center justify-center border border-dashed border-base-300 w-full rounded relative fields-grid-item"
           :style="{ backgroundColor }"
@@ -536,7 +536,7 @@ export default {
   },
   mounted () {
     try {
-      this.showCustomTab = localStorage.getItem('bermudasign_builder_tab') === 'custom'
+      this.showCustomTab = localStorage.getItem('signsuite_builder_tab') === 'custom'
     } catch (e) {
       console.error(e)
     }
@@ -584,7 +584,7 @@ export default {
     },
     setFieldsTab (type) {
       try {
-        localStorage.setItem('bermudasign_builder_tab', type)
+        localStorage.setItem('signsuite_builder_tab', type)
       } catch (e) {
         console.error(e)
       }
@@ -701,7 +701,7 @@ export default {
       hiddenEl.style.opacity = '0'
       hiddenEl.style.position = 'fixed'
 
-      root.querySelector('#bermudasign_modal_container').appendChild(hiddenEl)
+      root.querySelector('#signsuite_modal_container').appendChild(hiddenEl)
 
       event.dataTransfer.setDragImage(hiddenEl, 0, 0)
 

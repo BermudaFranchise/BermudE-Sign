@@ -7,7 +7,7 @@ module GenerateCertificate
 
   module_function
 
-  def call(name = BermudaSign.product_name)
+  def call(name = SignSuite.product_name)
     root_cert, root_key = generate_root_ca(name)
 
     sub_cert, sub_key = generate_sub_ca(name, root_cert, root_key)

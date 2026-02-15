@@ -4,23 +4,23 @@
 
 ```vue
 <template>
-  <DocusealBuilder
+  <SignSuiteBuilder
     v-if="token"
     :token="token"
   />
 </template>
 
 <script>
-import { DocusealBuilder } from '@docuseal/vue'
+import { SignSuiteBuilder } from '@signsuite/vue'
 
 export default {
   name: 'App',
-  components: { DocusealBuilder },
+  components: { SignSuiteBuilder },
   data () {
     return { token: '' }
   },
   mounted () {
-    fetch('/api/docuseal/builder_token', {
+    fetch('/api/builder_token', {
       method: 'POST'
     }).then(async (resp) => {
       const data = await resp.json()
@@ -104,7 +104,7 @@ const token = jwt.sign({
   "host": {
     "type": "string",
     "required": false,
-    "description": "BermudaSign host domain name. Only use this attribute if you are using the on-premises BermudaSign installation or bermudafranchise.com Cloud.",
+    "description": "SignSuite host domain name. Only use this attribute if you are using the on-premises SignSuite installation or example.com Cloud.",
     "example": "yourdomain.com"
   },
   "custom-button": {
@@ -498,7 +498,7 @@ const token = jwt.sign({
     "type": "object",
     "required": false,
     "default": "{}",
-    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://github.com/BermudaFranchise/BermudaSign/blob/master/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
+    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://signsuite.live/docs/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
   },
   "background-color": {
     "type": "string",

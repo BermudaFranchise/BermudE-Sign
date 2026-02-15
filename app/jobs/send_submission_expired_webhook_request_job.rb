@@ -27,7 +27,7 @@ class SendSubmissionExpiredWebhookRequestJob
                                                 data: Submissions::SerializeForApi.call(submission))
 
     if (resp.nil? || resp.status.to_i >= 400) && attempt <= MAX_ATTEMPTS &&
-       (!BermudaSign.multitenant? || submission.account.account_configs.exists?(key: :plan))
+       (!SignSuite.multitenant? || submission.account.account_configs.exists?(key: :plan))
       SendSubmissionExpiredWebhookRequestJob.perform_in((2**attempt).minutes, {
                                                           **params,
                                                           'attempt' => attempt + 1,

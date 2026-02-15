@@ -2,8 +2,8 @@
   <td class="flex items-center space-x-1">
     <%= svg_icon('discount_check_filled', class: 'w-6 h-6 text-green-500') %>
     <span class="flex items-center">
-      <%= t('bermuda_sign_trusted_signature') %>
-      <div class="tooltip ml-1" data-tip="<%= t('sign_documents_with_trusted_certificate_provided_by_docu_seal_your_documents_and_data_are_never_shared_with_docu_seal_p_d_f_checksum_is_provided_to_generate_a_trusted_signature') %>">
+      <%= t('sign_suite_trusted_signature') %>
+      <div class="tooltip ml-1" data-tip="<%= t('trusted_certificate_signature_description') %>">
         <%= svg_icon('circle_question', class: 'w-4 h-4 stroke-1') %>
       </div>
     </span>
@@ -11,7 +11,7 @@
   <td>
   </td>
   <td>
-    <%= button_to settings_esign_path, method: :put, params: { name: BermudaSign::AATL_CERT_NAME }, class: 'btn btn-outline btn-neutral btn-xs whitespace-nowrap', title: t('make_default') do %>
+    <%= button_to settings_esign_path, method: :put, params: { name: SignSuite::AATL_CERT_NAME }, class: 'btn btn-outline btn-neutral btn-xs whitespace-nowrap', title: t('make_default') do %>
       <%= t('make_default') %>
     <% end %>
   </td>

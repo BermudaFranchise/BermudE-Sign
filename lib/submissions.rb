@@ -8,7 +8,7 @@ module Submissions
   module_function
 
   def search(current_user, submissions, keyword, search_values: false, search_template: false)
-    if BermudaSign.fulltext_search?
+    if SignSuite.fulltext_search?
       fulltext_search(current_user, submissions, keyword, search_template:)
     else
       plain_search(submissions, keyword, search_values:, search_template:)

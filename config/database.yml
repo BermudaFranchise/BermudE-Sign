@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: bermudasign_dev
+  database: signsuite_dev
 
 test:
   <<: *default
-  database: bermudasign_test
+  database: signsuite_test
 
 production:
 <% if !ENV['DATABASE_HOST'].to_s.empty? %>

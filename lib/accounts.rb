@@ -13,7 +13,7 @@ module Accounts
     new_user.uuid = SecureRandom.uuid
     new_user.account = new_account
     new_user.encrypted_password = SecureRandom.hex
-    new_user.email = "#{SecureRandom.hex}@bermudafranchise.com"
+    new_user.email = "#{SecureRandom.hex}@example.com"
 
     account.templates.each do |template|
       new_template = template.dup
@@ -107,22 +107,22 @@ module Accounts
 
   def load_signing_pkcs(account)
     cert_data =
-      if BermudaSign.multitenant?
+      if SignSuite.multitenant?
         data = EncryptedConfig.find_by(account:, key: EncryptedConfig::ESIGN_CERTS_KEY)&.value
 
-        return BermudaSign.default_pkcs if data.blank?
+        return SignSuite.default_pkcs if data.blank?
 
         data
       else
-        return BermudaSign.default_pkcs if BermudaSign::CERTS.present?
+        return SignSuite.default_pkcs if SignSuite::CERTS.present?
 
         EncryptedConfig.find_by(account:, key: EncryptedConfig::ESIGN_CERTS_KEY)&.value ||
           EncryptedConfig.find_by(key: EncryptedConfig::ESIGN_CERTS_KEY).value
       end
 
     if (default_cert = cert_data['custom']&.find { |e| e['status'] == 'default' })
-      if default_cert['name'] == BermudaSign::AATL_CERT_NAME
-        BermudaSign.default_pkcs
+      if default_cert['name'] == SignSuite::AATL_CERT_NAME
+        SignSuite.default_pkcs
       else
         OpenSSL::PKCS12.new(Base64.urlsafe_decode64(default_cert['data']), default_cert['password'].to_s)
       end
@@ -132,12 +132,12 @@ module Accounts
   end
 
   def load_timeserver_url(account)
-    if BermudaSign.multitenant?
-      BermudaSign::TIMESERVER_URL
+    if SignSuite.multitenant?
+      SignSuite::TIMESERVER_URL
     else
       url = EncryptedConfig.find_by(account:, key: EncryptedConfig::TIMESTAMP_SERVER_URL_KEY)&.value
 
-      unless BermudaSign.multitenant?
+      unless SignSuite.multitenant?
         url ||=
           Account.order(:id).first.encrypted_configs.find_by(key: EncryptedConfig::TIMESTAMP_SERVER_URL_KEY)&.value
       end
@@ -148,12 +148,12 @@ module Accounts
 
   def load_trusted_certs(account)
     cert_data =
-      if BermudaSign.multitenant?
+      if SignSuite.multitenant?
         value = EncryptedConfig.find_by(account:, key: EncryptedConfig::ESIGN_CERTS_KEY)&.value || {}
 
-        BermudaSign::CERTS.merge(value)
-      elsif BermudaSign::CERTS.present?
-        BermudaSign::CERTS
+        SignSuite::CERTS.merge(value)
+      elsif SignSuite::CERTS.present?
+        SignSuite::CERTS
       else
         EncryptedConfig.find_by(key: EncryptedConfig::ESIGN_CERTS_KEY)&.value || {}
       end
@@ -170,11 +170,11 @@ module Accounts
      *default_pkcs.ca_certs,
      *custom_certs.map(&:certificate),
      *custom_certs.flat_map(&:ca_certs).compact,
-     *BermudaSign.trusted_certs]
+     *SignSuite.trusted_certs]
   end
 
   def can_send_emails?(_account, **_params)
-    return true if BermudaSign.multitenant?
+    return true if SignSuite.multitenant?
     return true if ENV['SMTP_ADDRESS'].present?
 
     EncryptedConfig.exists?(key: EncryptedConfig::EMAIL_SMTP_KEY)

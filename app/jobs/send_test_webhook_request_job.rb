@@ -5,7 +5,7 @@ class SendTestWebhookRequestJob
 
   sidekiq_options retry: 0
 
-  USER_AGENT = 'BermudaSign Webhook'
+  USER_AGENT = 'SignSuite Webhook'
 
   HttpsError = Class.new(StandardError)
   LocalhostError = Class.new(StandardError)
@@ -19,7 +19,7 @@ class SendTestWebhookRequestJob
 
     return unless webhook_url
 
-    if BermudaSign.multitenant?
+    if SignSuite.multitenant?
       uri = begin
         URI(webhook_url.url)
       rescue URI::Error

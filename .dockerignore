@@ -26,6 +26,6 @@
 /public/packs-test
 /public/packs
 /attachments
-/docuseal
+/legacy
 .DS_Store
 .env

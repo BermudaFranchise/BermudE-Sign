@@ -119,7 +119,7 @@ export default {
         docId: this.eidEasyData.doc_id,
         language: this.locale,
         countryCode: this.countryCode,
-        sandbox: ['demo.bermudasign.local'].includes(location.host),
+        sandbox: ['demo.signsuite.local'].includes(location.host),
         enabledMethods: {
           signature: this.eidEasyData.available_methods
         },

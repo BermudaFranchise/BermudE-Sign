@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'BermudaSign <info@bermudafranchise.com>'
+  default from: 'SignSuite <info@signsuite.live>'
   layout 'mailer'
 
   register_interceptor ActionMailerConfigsInterceptor
@@ -9,14 +9,14 @@ class ApplicationMailer < ActionMailer::Base
   register_observer ActionMailerEventsObserver
 
   before_action do
-    ActiveStorage::Current.url_options = BermudaSign.default_url_options
+    ActiveStorage::Current.url_options = SignSuite.default_url_options
   end
 
   after_action :set_message_metadata
   after_action :set_message_uuid
 
   def default_url_options
-    BermudaSign.default_url_options.merge(host: ENV.fetch('EMAIL_HOST', BermudaSign.default_url_options[:host]))
+    SignSuite.default_url_options.merge(host: ENV.fetch('EMAIL_HOST', SignSuite.default_url_options[:host]))
   end
 
   def set_message_metadata

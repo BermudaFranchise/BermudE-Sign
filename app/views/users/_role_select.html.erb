@@ -1,8 +1,38 @@
 <div class="form-control">
   <%= f.label :role, class: 'label' %>
-  <%= f.select :role, nil, {}, class: 'base-select' do %>
-    <option value="admin"><%= t('admin') %></option>
-    <option value="editor"><%= t('editor') %></option>
-    <option value="viewer"><%= t('viewer') %></option>
+  <%= f.select :role, nil, {}, class: 'base-select', id: 'role_select' do %>
+    <% role_hierarchy = { 'admin' => 0, 'manager' => 1, 'editor' => 2, 'viewer' => 3 } %>
+    <% current_level = role_hierarchy[current_user.role] || 99 %>
+    <% [['admin', t('admin')], ['manager', t('manager')], ['editor', t('editor')], ['viewer', t('viewer')]].each do |value, label| %>
+      <% if (role_hierarchy[value] || 99) >= current_level %>
+        <option value="<%= value %>" <%= 'selected' if f.object.role == value %>><%= label %></option>
+      <% end %>
+    <% end %>
   <% end %>
+  <div id="role_description" class="label">
+    <span class="label-text-alt text-base-content/60">
+      <% case f.object.role %>
+      <% when 'admin' %>
+        <%= t('full_access_to_all_settings_users_and_data') %>
+      <% when 'manager' %>
+        <%= t('manage_templates_submissions_and_users') %>
+      <% when 'editor' %>
+        <%= t('create_and_edit_templates_and_submissions') %>
+      <% when 'viewer' %>
+        <%= t('read_only_access_to_templates_and_submissions') %>
+      <% end %>
+    </span>
+  </div>
 </div>
+<script>
+  document.getElementById('role_select')?.addEventListener('change', function(e) {
+    var descs = {
+      'admin': '<%= j t('full_access_to_all_settings_users_and_data') %>',
+      'manager': '<%= j t('manage_templates_submissions_and_users') %>',
+      'editor': '<%= j t('create_and_edit_templates_and_submissions') %>',
+      'viewer': '<%= j t('read_only_access_to_templates_and_submissions') %>'
+    };
+    var el = document.querySelector('#role_description .label-text-alt');
+    if (el) el.textContent = descs[e.target.value] || '';
+  });
+</script>

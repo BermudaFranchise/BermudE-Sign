@@ -42,7 +42,7 @@ module DownloadUtils
       Addressable::URI.parse(url).normalize
     end
 
-    validate_uri!(uri) if BermudaSign.multitenant?
+    validate_uri!(uri) if SignSuite.multitenant?
 
     resp = conn.get(uri)
 
@@ -59,7 +59,7 @@ module DownloadUtils
   def conn
     Faraday.new do |faraday|
       faraday.response :follow_redirects, callback: lambda { |_, new_env|
-        validate_uri!(new_env[:url]) if BermudaSign.multitenant?
+        validate_uri!(new_env[:url]) if SignSuite.multitenant?
       }
     end
   end

@@ -50,7 +50,7 @@ class SubmittersController < ApplicationController
 
   def maybe_resend_email_sms(submitter, params)
     if params[:send_email] == '1' && submitter.email.present?
-      is_sent_recently = BermudaSign.multitenant? &&
+      is_sent_recently = SignSuite.multitenant? &&
                          EmailEvent.exists?(email: submitter.email,
                                             tag: 'submitter_invitation',
                                             emailable: submitter,

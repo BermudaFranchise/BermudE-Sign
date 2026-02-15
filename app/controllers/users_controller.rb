@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    return redirect_to settings_users_path, notice: I18n.t('unable_to_update_user') if BermudaSign.demo?
+    return redirect_to settings_users_path, notice: I18n.t('unable_to_update_user') if SignSuite.demo?
 
     attrs = user_params.compact_blank
     attrs = attrs.merge(user_params.slice(:archived_at)) if current_ability.can?(:create, @user)
@@ -80,7 +80,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if BermudaSign.demo? || @user.id == current_user.id
+    if SignSuite.demo? || @user.id == current_user.id
       return redirect_to settings_users_path, notice: I18n.t('unable_to_remove_user')
     end
 
@@ -92,7 +92,14 @@ class UsersController < ApplicationController
   private
 
   def role_valid?(role)
-    User::ROLES.include?(role)
+    return false unless User::ROLES.include?(role)
+
+    # Role hierarchy: users can only assign roles at or below their own level
+    hierarchy = { 'admin' => 0, 'manager' => 1, 'editor' => 2, 'viewer' => 3 }
+    current_level = hierarchy[current_user.role] || 99
+    target_level = hierarchy[role] || 99
+
+    target_level >= current_level
   end
 
   def build_user

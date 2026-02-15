@@ -65,18 +65,7 @@
       </button>
       <a
         v-if="isDemo"
-        target="_blank"
-        href="https://github.com/BermudaFranchise/BermudaSign"
-        class="white-button flex items-center space-x-1 w-full"
-      >
-        <IconBrandGithub />
-        <span>
-          Star on Github
-        </span>
-      </a>
-      <a
-        v-if="isDemo"
-        href="https://bermudafranchise.com/sign_up"
+        href="https://signsuite.live/sign_up"
         class="white-button flex items-center space-x-1 w-full"
       >
         <IconLogin />
@@ -91,16 +80,16 @@
     >
       {{ t('powered_by') }}
       <a
-        href="https://www.bermudafranchise.com/start"
+        href="https://www.signsuite.live"
         target="_blank"
         class="underline"
-      >BermudaSign</a> - {{ t('open_source_documents_software') }}
+      >SignSuite</a>
     </div>
   </div>
 </template>
 
 <script>
-import { IconCircleCheck, IconBrandGithub, IconMail, IconDownload, IconInnerShadowTop, IconLogin } from '@tabler/icons-vue'
+import { IconCircleCheck, IconMail, IconDownload, IconInnerShadowTop, IconLogin } from '@tabler/icons-vue'
 import MarkdownContent from './markdown_content'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 
@@ -110,7 +99,6 @@ export default {
     MarkdownContent,
     IconCircleCheck,
     IconInnerShadowTop,
-    IconBrandGithub,
     IconMail,
     IconLogin,
     IconDownload

@@ -3,16 +3,16 @@
 ### Example Code
 
 ```javascript
-<script src="https://cdn.bermudafranchise.com/js/form.js"></script>
+<script src="https://cdn.example.com/js/form.js"></script>
 
-<docuseal-form
-  id="docusealForm"
-  data-src="https://bermudafranchise.com/d/{{ template_slug }}"
+<signsuite-form
+  id="signsuiteForm"
+  data-src="https://example.com/d/{{ template_slug }}"
   data-email="{{ signer_email }}">
-</docuseal-form>
+</signsuite-form>
 
 <script>
-  window.docusealForm.addEventListener('completed', (e) => {
+  window.signsuiteForm.addEventListener('completed', (e) => {
     console.log(e.detail)
   })
 </script>
@@ -111,7 +111,7 @@
     "type": "string",
     "required": false,
     "default": "{}",
-    "description": "JSON encoded string that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://github.com/BermudaFranchise/BermudaSign/blob/master/app/javascript/submission_form/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">submission_form/i18n.js</a> for available i18n keys."
+    "description": "JSON encoded string that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://signsuite.live/docs/app/javascript/submission_form/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">submission_form/i18n.js</a> for available i18n keys."
   },
   "data-go-to-last": {
     "type": "boolean",
@@ -240,7 +240,7 @@
     "type": "string",
     "required": false,
     "description": "URL to redirect to after the submission completion.",
-    "example": "https://bermudafranchise.com/success"
+    "example": "https://example.com/success"
   },
   "data-completed-message-title": {
     "type": "string",
@@ -283,24 +283,24 @@
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on initializing the form component.",
-    "example": "document.querySelector('docuseal-form').addEventListener('init', () => console.log('init'))"
+    "example": "document.querySelector('signsuite-form').addEventListener('init', () => console.log('init'))"
   },
   "load": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on loading the form data.",
-    "example": "document.querySelector('docuseal-form').addEventListener('load', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-form').addEventListener('load', (e) => e.detail)"
   },
   "completed": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered after form completion.",
-    "example": "document.querySelector('docuseal-form').addEventListener('completed', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-form').addEventListener('completed', (e) => e.detail)"
   },
   "declined": {
     "type": "event",
     "description": "Custom event to be triggered after form decline.",
-    "example": "document.querySelector('docuseal-form').addEventListener('declined', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-form').addEventListener('declined', (e) => e.detail)"
   }
 }
 ```

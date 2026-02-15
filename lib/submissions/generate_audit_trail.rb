@@ -43,7 +43,7 @@ module Submissions
 
         io = StringIO.new
 
-        document.trailer.info[:Creator] = "#{BermudaSign.product_name} (#{BermudaSign::PRODUCT_URL})"
+        document.trailer.info[:Creator] = "#{SignSuite.product_name} (#{SignSuite::PRODUCT_URL})"
 
         if pkcs
           sign_params = {
@@ -72,7 +72,7 @@ module Submissions
     def build_audit_trail(submission)
       account = submission.account
       verify_url = Rails.application.routes.url_helpers.settings_esign_url(
-        **BermudaSign.default_url_options, host: ENV.fetch('EMAIL_HOST', BermudaSign.default_url_options[:host])
+        **SignSuite.default_url_options, host: ENV.fetch('EMAIL_HOST', SignSuite.default_url_options[:host])
       )
 
       page_size =
@@ -84,7 +84,7 @@ module Submissions
 
       composer = HexaPDF::Composer.new(skip_page_creation: true)
 
-      if BermudaSign.pdf_format == 'pdf/a-3b'
+      if SignSuite.pdf_format == 'pdf/a-3b'
         composer.document.task(:pdfa, level: '3b')
       elsif FONT_NAME == 'GoNotoKurrent'
         composer.document.task(:pdfa)
@@ -410,7 +410,7 @@ module Submissions
                     if with_file_links
                       ActiveStorage::Blob.proxy_url(attachment.blob)
                     else
-                      r.submissions_preview_url(submission.slug, **BermudaSign.default_url_options)
+                      r.submissions_preview_url(submission.slug, **SignSuite.default_url_options)
                     end
 
                   { link:, text: "#{attachment.filename}\n", style: :link }
@@ -502,7 +502,7 @@ module Submissions
     end
 
     def sign_reason
-      'Signed with BermudaSign'
+      'Signed with SignSuite'
     end
 
     def select_attachments(submitter)
@@ -524,8 +524,8 @@ module Submissions
     def add_logo(column, _submission = nil)
       column.image(PdfIcons.logo_io, width: 40, height: 40, position: :float)
 
-      column.formatted_text([{ text: 'BermudaSign',
-                               link: BermudaSign::PRODUCT_EMAIL_URL }],
+      column.formatted_text([{ text: 'SignSuite',
+                               link: SignSuite::PRODUCT_EMAIL_URL }],
                             font_size: 20,
                             font: [FONT_NAME, { variant: :bold }],
                             width: 100,

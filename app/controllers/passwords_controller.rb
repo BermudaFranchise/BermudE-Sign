@@ -13,7 +13,7 @@ class PasswordsController < Devise::PasswordsController
 
   def create
     super do |resource|
-      resource.errors.clear unless BermudaSign.multitenant?
+      resource.errors.clear unless SignSuite.multitenant?
     end
   end
 

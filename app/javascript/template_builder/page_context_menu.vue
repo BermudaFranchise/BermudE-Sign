@@ -85,7 +85,7 @@ export default {
     },
     hasClipboardData () {
       try {
-        const clipboard = localStorage.getItem('bermudasign_clipboard')
+        const clipboard = localStorage.getItem('signsuite_clipboard')
 
         if (clipboard) {
           const data = JSON.parse(clipboard)

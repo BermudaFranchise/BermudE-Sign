@@ -4,13 +4,13 @@
 
 ```react
 import React from "react"
-import { DocusealForm } from '@docuseal/react'
+import { SignSuiteForm } from '@signsuite/react'
 
 export function App() {
   return (
     <div className="app">
-      <DocusealForm
-        src="https://bermudafranchise.com/d/{{template_slug}}"
+      <SignSuiteForm
+        src="https://example.com/d/{{template_slug}}"
         email="{{signer_email}}"
         onComplete={(data) => console.log(data)}
       />
@@ -112,7 +112,7 @@ export function App() {
     "type": "object",
     "required": false,
     "default": "{}",
-    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://github.com/BermudaFranchise/BermudaSign/blob/master/app/javascript/submission_form/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">submission_form/i18n.js</a> for available i18n keys."
+    "description": "Object that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://signsuite.live/docs/app/javascript/submission_form/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">submission_form/i18n.js</a> for available i18n keys."
   },
   "goToLast": {
     "type": "boolean",
@@ -159,7 +159,7 @@ export function App() {
     "type": "string",
     "required": false,
     "description": "URL to redirect to after the submission completion.",
-    "example": "https://bermudafranchise.com/success"
+    "example": "https://example.com/success"
   },
   "completedMessage": {
     "type": "object",

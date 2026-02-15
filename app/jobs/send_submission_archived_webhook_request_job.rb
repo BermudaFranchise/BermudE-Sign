@@ -27,7 +27,7 @@ class SendSubmissionArchivedWebhookRequestJob
                                                 data: submission.as_json(only: %i[id archived_at]))
 
     if (resp.nil? || resp.status.to_i >= 400) && attempt <= MAX_ATTEMPTS &&
-       (!BermudaSign.multitenant? || submission.account.account_configs.exists?(key: :plan))
+       (!SignSuite.multitenant? || submission.account.account_configs.exists?(key: :plan))
       SendSubmissionArchivedWebhookRequestJob.perform_in((2**attempt).minutes, {
                                                            **params,
                                                            'attempt' => attempt + 1,

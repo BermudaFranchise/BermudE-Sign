@@ -15,9 +15,9 @@ require_relative '../lib/normalize_client_ip_middleware'
 
 Bundler.require(*Rails.groups)
 
-require_relative '../lib/bermuda_sign'
+require_relative '../lib/sign_suite'
 
-module BermudaSign
+module SignSuite
   class Application < Rails::Application
     config.load_defaults 8.1
 
@@ -44,7 +44,7 @@ module BermudaSign
 
     config.generators.system_tests = nil
 
-    autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels") # https://github.com/hotwired/turbo-rails/issues/512
+    autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels")
 
     ActiveSupport.run_load_hooks(:application_config, self)
   end

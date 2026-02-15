@@ -3,16 +3,16 @@
 ### Example Code
 
 ```javascript
-<script src="https://bermudafranchise.com/js/builder.js"></script>
+<script src="https://example.com/js/builder.js"></script>
 
-<docuseal-builder
+<signsuite-builder
   data-token="<%= JWT.encode({
     user_email: '{{admin_user_email}}',
     integration_email: '{{signer_email}}',
     name: 'Integration W-9 Test Form',
     document_urls: ['https://www.irs.gov/pub/irs-pdf/fw9.pdf'],
   }, '{{api_key}}') %>">
-</docuseal-builder>
+</signsuite-builder>
 
 ```
 
@@ -74,7 +74,7 @@
   "data-host": {
     "type": "string",
     "required": false,
-    "description": "BermudaSign host domain name. Only use this attribute if you are using the on-premises BermudaSign installation or bermudafranchise.com Cloud.",
+    "description": "SignSuite host domain name. Only use this attribute if you are using the on-premises SignSuite installation or example.com Cloud.",
     "example": "yourdomain.com"
   },
   "data-roles": {
@@ -456,7 +456,7 @@
     "type": "string",
     "required": false,
     "default": "{}",
-    "description": "JSON encoded string that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://github.com/BermudaFranchise/BermudaSign/blob/master/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
+    "description": "JSON encoded string that contains i18n keys to replace the default UI text with custom values. See <a href=\"https://signsuite.live/docs/app/javascript/template_builder/i18n.js\" class=\"link\" target=\"_blank\" rel=\"nofollow\">template_builder/i18n.js</a> for available i18n keys."
   },
   "data-language": {
     "type": "string",
@@ -487,31 +487,31 @@
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on loading the form builder template data.",
-    "example": "document.querySelector('docuseal-builder').addEventListener('load', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-builder').addEventListener('load', (e) => e.detail)"
   },
   "upload": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on uploading a document to the template.",
-    "example": "document.querySelector('docuseal-builder').addEventListener('upload', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-builder').addEventListener('upload', (e) => e.detail)"
   },
   "send": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on sending documents for signature to recipients.",
-    "example": "document.querySelector('docuseal-builder').addEventListener('send', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-builder').addEventListener('send', (e) => e.detail)"
   },
   "change": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered every time a change to the template is made.",
-    "example": "document.querySelector('docuseal-builder').addEventListener('change', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-builder').addEventListener('change', (e) => e.detail)"
   },
   "save": {
     "type": "event",
     "required": false,
     "description": "Custom event to be triggered on saving changes of the template form.",
-    "example": "document.querySelector('docuseal-builder').addEventListener('save', (e) => e.detail)"
+    "example": "document.querySelector('signsuite-builder').addEventListener('save', (e) => e.detail)"
   }
 }
 ```

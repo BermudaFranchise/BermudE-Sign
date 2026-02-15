@@ -238,7 +238,7 @@ export default {
       return `/auth/google_oauth2?${query}`
     },
     modalContainerEl () {
-      return this.$el.getRootNode().querySelector('#bermudasign_modal_container')
+      return this.$el.getRootNode().querySelector('#signsuite_modal_container')
     }
   },
   mounted () {
